@@ -46,7 +46,7 @@ def aStar(start, goal):
         for neighbor in getNeighbours(current):
             if neighbor not in visited:
                 gUpdate = g + 1
-                fUpdate = gUpdate + heuristic(neighbor)
+                fUpdate = gUpdate + heuristicMid(neighbor)
                 heapq.heappush(open_set, (fUpdate, gUpdate, neighbor, path + [current]))
 
     return None
