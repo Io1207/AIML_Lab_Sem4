@@ -12,6 +12,7 @@ def check_valid(state: list, max_missionaries: int, max_cannibals: int) -> bool:
     mLeft, cLeft, boat = state
     mRight = max_missionaries - mLeft
     cRight = max_cannibals - cLeft
+    # checks conditions on left bank and right bank, but not on boat
     return (mLeft >= 0 and cLeft >= 0 and mRight >= 0 and cRight >= 0 and (mLeft == 0 or mLeft >= cLeft) and (mRight == 0 or mRight >= cRight))
     raise ValueError("check_valid not implemented")
 
@@ -22,9 +23,9 @@ def get_neighbours(state: list, max_missionaries: int, max_cannibals: int) -> Li
     Generate all valid neighbouring states.
     """
     mLeft, cLeft, boat = state
-    # moves contain pair of (m, c) on boat
+    # moves contain valid pair of (m, c) on boat 
     moves = [(2, 0), (0, 2), (1, 1), (1, 0), (0, 1)]
-    neighbors = []
+    neighbors = [] 
     for m,c in moves:
         if boat == 1:
             next = [mLeft - m, cLeft - c, 0]
@@ -93,6 +94,9 @@ def h5(state: list) -> int:  # 3 marks
     raise ValueError("h5 not implemented")
 
 def astar_general(init_state: list, final_state: list, heuristic, max_missionaries: int, max_cannibals: int) -> List[List]:
+    """
+    General A* function for all the heuristics
+    """
     openList = []#open list   
     heapq.heappush(openList, (0 + heuristic(init_state), 0, init_state, []))  # (f, g, state, path)
     visited = [] #closed list
@@ -122,8 +126,7 @@ def astar_h1(init_state: list, final_state: list, max_missionaries: int, max_can
     Implement A* with h1 heuristic.
     This function must return path obtained and a boolean which says if the heuristic chosen satisfes Monotone restriction property while exploring or not.
     """
-    # astar_general(init_state,final_state)
-    monotone=False
+    monotone=True
     if init_state[0]<init_state[1]:
         return([],monotone)
     
@@ -138,7 +141,7 @@ def astar_h2(init_state: list, final_state: list, max_missionaries: int, max_can
     Graded
     Implement A* with h2 heuristic.
     """
-    monotone=False
+    monotone=True
     if init_state[0]<init_state[1]:
         return([],monotone)
     
@@ -153,7 +156,7 @@ def astar_h3(init_state: list, final_state: list, max_missionaries: int, max_can
     Graded
     Implement A* with h3 heuristic.
     """
-    monotone=False
+    monotone=True
     if init_state[0]<init_state[1]:
         return([],monotone)
     
